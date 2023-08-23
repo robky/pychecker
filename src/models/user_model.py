@@ -9,9 +9,9 @@ class User(Base):
     __tablename__ = "user"
     id = Column(Integer, primary_key=True)
     email = Column(
-        String(limits.MAX_LENGTH_EMAIL), unique=True, nullable=False
+        String(limits.MAX_LENGTH_EMAIL.value), unique=True, nullable=False
     )
-    password = Column(String(limits.MAX_LENGTH_PASSWORD), nullable=False)
+    password = Column(String(limits.MAX_LENGTH_PASSWORD.value), nullable=False)
 
     file = relationship(
         "File",
