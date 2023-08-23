@@ -1,4 +1,5 @@
 import os
+
 from pydantic import PostgresDsn
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -13,7 +14,7 @@ class DBSettings(BaseSettings):
     postgres_db: str = "postgres"
     postgres_db_test: str = "postgres_test"
 
-    model_config = SettingsConfigDict(env_file=dotenv_path, extra='ignore')
+    model_config = SettingsConfigDict(env_file=dotenv_path, extra="ignore")
 
 
 class AppSettings(BaseSettings):
@@ -26,18 +27,22 @@ class AppSettings(BaseSettings):
     algorithm: str = "HS256"
 
     db_set: DBSettings = DBSettings()
-    database_dsn: str = str(PostgresDsn(
-        f"postgresql+asyncpg://{db_set.postgres_user}:"
-        f"{db_set.postgres_password}@{db_set.postgres_server}:"
-        f"{db_set.postgres_port}/{db_set.postgres_db}"
-    ))
-    database_test_dsn: str = str(PostgresDsn(
-        f"postgresql+asyncpg://{db_set.postgres_user}:"
-        f"{db_set.postgres_password}@{db_set.postgres_server}:"
-        f"{db_set.postgres_port}/{db_set.postgres_db_test}",
-    ))
+    database_dsn: str = str(
+        PostgresDsn(
+            f"postgresql+asyncpg://{db_set.postgres_user}:"
+            f"{db_set.postgres_password}@{db_set.postgres_server}:"
+            f"{db_set.postgres_port}/{db_set.postgres_db}"
+        )
+    )
+    database_test_dsn: str = str(
+        PostgresDsn(
+            f"postgresql+asyncpg://{db_set.postgres_user}:"
+            f"{db_set.postgres_password}@{db_set.postgres_server}:"
+            f"{db_set.postgres_port}/{db_set.postgres_db_test}",
+        )
+    )
 
-    model_config = SettingsConfigDict(env_file=dotenv_path, extra='ignore')
+    model_config = SettingsConfigDict(env_file=dotenv_path, extra="ignore")
 
 
 app_settings = AppSettings()
